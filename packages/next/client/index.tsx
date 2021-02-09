@@ -50,7 +50,11 @@ type RenderRouteInfo = PrivateRouteInfo & {
 type RenderErrorProps = Omit<RenderRouteInfo, 'Component' | 'styleSheets'>
 
 const data: typeof window['__NEXT_DATA__'] = JSON.parse(
-  document.getElementById('__NEXT_DATA__')!.textContent!
+  document
+    .getElementById('__NEXT_DATA__')!
+    .textContent!.replace(/<!--\/\/--><!\[CDATA\[\/\/ ><!--/g, '')
+    .replace(/\/\/--><!\]\]>/g, '')
+    .trim()
 )
 window.__NEXT_DATA__ = data
 

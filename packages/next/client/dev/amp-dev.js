@@ -8,7 +8,13 @@ if (!window.EventSource) {
   window.EventSource = EventSourcePolyfill
 }
 
-const data = JSON.parse(document.getElementById('__NEXT_DATA__').textContent)
+const data = JSON.parse(
+  document
+    .getElementById('__NEXT_DATA__')
+    .textContent.replace(/<!--\/\/--><!\[CDATA\[\/\/ ><!--/g, '')
+    .replace(/\/\/--><!\]\]>/g, '')
+    .trim()
+)
 let { assetPrefix, page } = data
 assetPrefix = assetPrefix || ''
 let mostRecentHash = null
